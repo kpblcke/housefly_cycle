@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Road : MonoBehaviour
 {
-    [SerializeField] private Transform path;
+    [SerializeField] 
+    private Transform path;
+    
     // Start is called before the first frame update
     void Start()
     {

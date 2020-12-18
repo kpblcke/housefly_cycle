@@ -3,17 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class PlayerFly : MonoBehaviour
+[RequireComponent(typeof(Rigidbody))]
+public class PlayerFly : Singleton<PlayerFly>
 {
     [SerializeField] 
     private Animator _animator;
 
     [SerializeField]
     private FlyState curState;
+
+    [SerializeField]
+    private Rigidbody _rigidbody;
+
+    [SerializeField]
+    private bool isDead = false;
+
+    public bool IsDead
+    {
+        get => isDead;
+        set => isDead = value;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         _animator = GetComponent<Animator>();
+        _rigidbody = GetComponent<Rigidbody>();
         curState = FindObjectOfType<FlyState>();
     }
 
@@ -25,6 +40,8 @@ public class PlayerFly : MonoBehaviour
 
     public void setDead()
     {
-        _animator.SetBool("dead", true);
+        isDead = true;
+        _animator.SetBool("dead", isDead);
+        _rigidbody.isKinematic = false;
     }
 }
